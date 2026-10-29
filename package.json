@@ -1,0 +1,36 @@
+{
+  "name": "so-mais-um-livro-backend",
+  "version": "1.0.0",
+  "description": "API para autenticação e autorização de usuários com gerenciamento de livros",
+  "homepage": "https://github.com/lorimendes/so-mais-um-livro-backend#readme",
+  "bugs": {
+    "url": "https://github.com/lorimendes/so-mais-um-livro-backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lorimendes/so-mais-um-livro-backend.git"
+  },
+  "license": "ISC",
+  "author": "Lorena Mendes",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "npx eslint .",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.32.0",
+    "jest": "^30.5.2",
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "celebrate": "^16.0.0",
+    "express": "^5.3.0",
+    "joy": "^0.1.1",
+    "mongoose": "^9.11.4"
+  }
+}
