@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import bcrypt from "bcryptjs";
 
-const userSquema = new mongoose.Squema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     minlenhth: 2,
@@ -24,6 +25,28 @@ const userSquema = new mongoose.Squema({
   },
 });
 
-const user = mongoose.model("user", userSquema);
+userSchema.statics.findUserByCredentials = async function findUserByCredentials(
+  email,
+  password,
+) {
+  const user = await this.findOne({ email }).select("+password");
+
+  const error = new Error("E-mail ou senha incorretos");
+  error.name = "AuthenticationError";
+
+  if (!user) {
+    throw error;
+  }
+
+  const matched = await bcrypt.compare(password, user.password);
+
+  if (!matched) {
+    throw error;
+  }
+
+  return user;
+};
+
+const user = mongoose.model("user", userSchema);
 
 export default user;
