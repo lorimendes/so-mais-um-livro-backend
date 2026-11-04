@@ -1,25 +1,25 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 const authenticateToken = (req, res, next) => {
   const { authorization } = req.headers;
 
-  const error = new Error("Token inválido ou expirado");
-  error.name = "InvalidToken";
+  const error = new Error('Token inválido ou expirado');
+  error.name = 'InvalidToken';
 
-  if (!authorization || !authorization.startsWith("Bearer ")) {
+  if (!authorization || !authorization.startsWith('Bearer ')) {
     throw error;
   }
 
-  const token = authorization.replace("Bearer ", "");
+  const token = authorization.replace('Bearer ', '');
 
   let payload;
 
   try {
     payload = jwt.verify(
       token,
-      process.env.NODE_ENV === "production"
+      process.env.NODE_ENV === 'production'
         ? process.env.JWT_SECRET
-        : "dev-secret",
+        : 'dev-secret',
     );
   } catch (err) {
     throw error;
@@ -30,4 +30,4 @@ const authenticateToken = (req, res, next) => {
   next();
 };
 
-export { authenticateToken };
+export default authenticateToken;

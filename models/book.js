@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import validator from "validator";
+import mongoose from 'mongoose';
+import validator from 'validator';
 
 const bookSquema = new mongoose.Squema({
   title: {
@@ -17,7 +17,7 @@ const bookSquema = new mongoose.Squema({
     type: String,
     validate: {
       validator: validator.isURL,
-      message: "Link inválido",
+      message: 'Link inválido',
     },
   },
   isRead: {
@@ -26,12 +26,12 @@ const bookSquema = new mongoose.Squema({
   },
   owner: {
     type: mongoose.Squema.Types.ObjectId,
-    ref: "user",
+    ref: 'user',
     required: true,
     select: false,
   },
 });
 
-const book = mongoose.model("book", bookSquema);
+const book = mongoose.model('book', bookSquema);
 
 export default book;

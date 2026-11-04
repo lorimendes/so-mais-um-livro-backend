@@ -1,6 +1,6 @@
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import User from "../models/user.js";
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import User from '../models/user';
 
 const createUser = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -10,11 +10,11 @@ const createUser = async (req, res, next) => {
 
     const token = jwt.sign(
       { _id },
-      process.env.NODE_ENV === "production"
+      process.env.NODE_ENV === 'production'
         ? process.env.JWT_SECRET
-        : "dev-secret",
+        : 'dev-secret',
       {
-        expiresIn: "7d",
+        expiresIn: '7d',
       },
     );
 
@@ -31,11 +31,11 @@ const login = async (req, res, next) => {
     const { _id } = await User.findUserByCredentials(email, password);
     const token = jwt.sign(
       { _id },
-      process.env.NODE_ENV === "production"
+      process.env.NODE_ENV === 'production'
         ? process.env.JWT_SECRET
-        : "dev-secret",
+        : 'dev-secret',
       {
-        expiresIn: "7d",
+        expiresIn: '7d',
       },
     );
 
