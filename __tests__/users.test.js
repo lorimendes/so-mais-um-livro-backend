@@ -92,13 +92,14 @@ describe('Verifica as rotas /users', () => {
   });
 
   describe('Verifica solicitação GET /users/me', () => {
-    it('deve retornar status 200 e os dados de usuário', async () => {
+    it('deve retornar status 200 e os dados de usuário, sem senha', async () => {
       const response = await request
         .get('/users/me')
         .set('Authorization', `Bearer ${token}`);
 
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty('name');
+      expect(response.body).not.toHaveProperty('password');
     });
 
     it('deve retornar status 401 se estiver sem token', async () => {
