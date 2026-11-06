@@ -10,7 +10,7 @@ import { requestLogger, errorLogger } from './middlewares/logger';
 
 const corsOptions = {
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
-  allowHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
 
@@ -18,17 +18,16 @@ process.loadEnvFile();
 const { PORT = 3000 } = process.env;
 const app = express();
 
-try {
-  mongoose.connect('mongodb://localhost:27017/somaisumlivro');
-} catch (err) {
+const { MONGODB_URL = 'mongodb://localhost:27017/somaisumlivro' } = process.env;
+mongoose.connect(MONGODB_URL).catch((err) => {
   console.error(`Erro ao conectar com o banco de dados: ${err}`);
-}
+});
 
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(requestLogger);
-app.use('/signup', createUser);
-app.use('/signin', login);
+app.post('/signup', createUser);
+app.post('/signin', login);
 app.use(authenticateToken);
 app.use('/users', usersRouter);
 app.use('/books', booksRouter);
