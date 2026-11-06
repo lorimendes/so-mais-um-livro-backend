@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import usersRouter from './routes/users';
+import booksRouter from './routes/books';
 import { createUser, login } from './controllers/users';
 import authenticateToken from './middlewares/auth';
 
@@ -53,6 +54,7 @@ app.use('/signup', createUser);
 app.use('/signin', login);
 app.use(authenticateToken);
 app.use('/users', usersRouter);
+app.use('/books', booksRouter);
 app.use(handleError);
 
 if (process.env.NODE_ENV !== 'test') {

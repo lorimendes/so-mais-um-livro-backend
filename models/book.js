@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 
-const bookSquema = new mongoose.Squema({
+const bookSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -12,6 +12,10 @@ const bookSquema = new mongoose.Squema({
   },
   description: {
     type: String,
+  },
+  categories: {
+    type: [String],
+    default: [],
   },
   thumbnail: {
     type: String,
@@ -25,13 +29,12 @@ const bookSquema = new mongoose.Squema({
     default: false,
   },
   owner: {
-    type: mongoose.Squema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     required: true,
-    select: false,
   },
 });
 
-const book = mongoose.model('book', bookSquema);
+const book = mongoose.model('book', bookSchema);
 
 export default book;

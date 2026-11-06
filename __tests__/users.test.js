@@ -79,12 +79,8 @@ describe('Verifica as rotas /users', () => {
   let token;
 
   beforeAll(async () => {
-    await request.post('/signup').send(fakeUser);
-    const { email, password } = fakeUser;
-    const loginResponse = await request
-      .post('/signin')
-      .send({ email, password });
-    token = loginResponse.body.token;
+    const signinResponse = await request.post('/signup').send(fakeUser);
+    token = signinResponse.body.token;
   });
 
   afterAll(async () => {
