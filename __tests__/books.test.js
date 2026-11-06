@@ -1,7 +1,7 @@
 import supertest from 'supertest';
-import app from '../app';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import app from '../app';
 import User from '../models/user';
 import Book from '../models/book';
 
@@ -83,7 +83,7 @@ describe('Verifica rotas /books', () => {
     it('deve retornar status 401, sem envio do token', async () => {
       const response = await request
         .get('/books')
-        .set('Authorization', `Bearer `);
+        .set('Authorization', 'Bearer ');
 
       expect(response.status).toBe(401);
     });

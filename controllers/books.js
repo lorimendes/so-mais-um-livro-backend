@@ -16,7 +16,14 @@ const getBooks = async (req, res, next) => {
 };
 
 const createBook = async (req, res, next) => {
-  const { title, authors, description, categories, thumbnail } = req.body;
+  const {
+    title, //
+    authors,
+    description,
+    categories,
+    thumbnail,
+  } = req.body;
+
   const bookData = {
     title,
     authors,
@@ -25,6 +32,7 @@ const createBook = async (req, res, next) => {
     thumbnail,
     owner: req.user._id,
   };
+
   try {
     const book = await Book.create(bookData);
     res.status(201).send(book);
@@ -75,4 +83,9 @@ const deleteBook = async (req, res, next) => {
   }
 };
 
-export { getBooks, createBook, updateIsReadBook, deleteBook };
+export {
+  getBooks, //
+  createBook,
+  updateIsReadBook,
+  deleteBook,
+};
