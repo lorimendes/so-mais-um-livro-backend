@@ -18,7 +18,7 @@ const { PORT = 3000 } = process.env;
 const app = express();
 
 try {
-  mongoose.connect('mongodb://localhost:27017');
+  mongoose.connect('mongodb://localhost:27017/somaisumlivro');
 } catch (err) {
   console.error(`Erro ao conectar com o banco de dados: ${err}`);
 }
