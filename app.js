@@ -6,6 +6,7 @@ import booksRouter from './routes/books';
 import { createUser, login } from './controllers/users';
 import authenticateToken from './middlewares/auth';
 import handleError from './middlewares/error';
+import { requestLogger, errorLogger } from './middlewares/logger';
 
 const corsOptions = {
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
@@ -25,17 +26,17 @@ try {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(requestLogger);
 app.use('/signup', createUser);
 app.use('/signin', login);
 app.use(authenticateToken);
 app.use('/users', usersRouter);
 app.use('/books', booksRouter);
+app.use(errorLogger);
 app.use(handleError);
 
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
-    console.log('Conectado');
-  });
+  app.listen(PORT, () => {});
 }
 
 export default app;

@@ -20,7 +20,6 @@ const handleError = (err, req, res, _next) => {
   if (err.code === 11000) {
     return res.status(409).send({ message: 'Esse e-mail já está cadastrado' });
   }
-  console.error(err);
   return res.status(500).send({ message: 'Ocorreu um erro no servidor' });
 };
 
