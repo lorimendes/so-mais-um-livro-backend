@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import helmet from 'helmet';
 import usersRouter from './routes/users';
 import booksRouter from './routes/books';
 import { createUser, login } from './controllers/users';
@@ -23,6 +24,7 @@ mongoose.connect(MONGODB_URL).catch((err) => {
   console.error(`Erro ao conectar com o banco de dados: ${err}`);
 });
 
+app.use(helmet());
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(requestLogger);
