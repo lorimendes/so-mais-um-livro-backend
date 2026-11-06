@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import usersRouter from './routes/users';
 import booksRouter from './routes/books';
 import { createUser, login } from './controllers/users';
+import limiter from './middlewares/limiter';
 import authenticateToken from './middlewares/auth';
 import handleError from './middlewares/error';
 import { requestLogger, errorLogger } from './middlewares/logger';
@@ -25,6 +26,7 @@ mongoose.connect(MONGODB_URL).catch((err) => {
 });
 
 app.use(helmet());
+app.use(limiter);
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(requestLogger);
