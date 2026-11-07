@@ -5,7 +5,15 @@
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
     "no-console": "off",
     "linebreak-style": "off",
-    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+    "operator-linebreak": "off",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "always"
+      }
+    ]
   },
   "env": {
     "jest": true

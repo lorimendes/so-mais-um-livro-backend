@@ -1,4 +1,4 @@
-import Book from '../models/book';
+import Book from '../models/book.js';
 
 const authorizationError = new Error('Usuário não autorizado');
 authorizationError.name = 'AuthorizationError';

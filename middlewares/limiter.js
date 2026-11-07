@@ -9,3 +9,5 @@ const limiter = rateLimit({
       'Você atingiu o limite de requisições. Por favor, aguarde 15 minutos.',
   },
 });
+
+export default limiter;

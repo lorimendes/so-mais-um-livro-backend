@@ -1,9 +1,9 @@
 import supertest from 'supertest';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
-import app from '../app';
-import User from '../models/user';
-import Book from '../models/book';
+import app from '../app.js';
+import User from '../models/user.js';
+import Book from '../models/book.js';
 
 const request = supertest(app);
 

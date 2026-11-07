@@ -2,13 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
-import usersRouter from './routes/users';
-import booksRouter from './routes/books';
-import { createUser, login } from './controllers/users';
-import limiter from './middlewares/limiter';
-import authenticateToken from './middlewares/auth';
-import handleError from './middlewares/error';
-import { requestLogger, errorLogger } from './middlewares/logger';
+import usersRouter from './routes/users.js';
+import booksRouter from './routes/books.js';
+import { createUser, login } from './controllers/users.js';
+import limiter from './middlewares/limiter.js';
+import authenticateToken from './middlewares/auth.js';
+import handleError from './middlewares/error.js';
+import { requestLogger, errorLogger } from './middlewares/logger.js';
 
 const corsOptions = {
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],

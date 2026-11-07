@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import mongoose from 'mongoose';
-import app from '../app';
-import User from '../models/user';
+import app from '../app.js';
+import User from '../models/user.js';
 
 const request = supertest(app);
 
