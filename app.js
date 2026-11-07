@@ -20,8 +20,12 @@ process.loadEnvFile();
 const { PORT = 3000 } = process.env;
 const app = express();
 
-const { MONGODB_URL = 'mongodb://localhost:27017/somaisumlivro' } = process.env;
-mongoose.connect(MONGODB_URL).catch((err) => {
+const mongodbUrl =
+  process.env.NODE_ENV === 'test'
+    ? 'mongodb://localhost:27017/somaisumlivro'
+    : process.env.MONGODB_URL;
+
+mongoose.connect(mongodbUrl).catch((err) => {
   console.error(`Erro ao conectar com o banco de dados: ${err}`);
 });
 
