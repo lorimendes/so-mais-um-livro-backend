@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import cors from 'cors';
 import helmet from 'helmet';
+import cors from 'cors';
 import { errors } from 'celebrate';
 import usersRouter from './routes/users.js';
 import booksRouter from './routes/books.js';
@@ -34,9 +34,13 @@ mongoose.connect(mongodbUrl).catch((err) => {
   console.error(`Erro ao conectar com o banco de dados: ${err}`);
 });
 
+const handleRouteNotFound = (req, res) => {
+  res.status(404).send({ message: 'A solicitação não foi encontrada' });
+};
+
 app.use(helmet());
-app.use(limiter);
 app.use(cors(corsOptions));
+app.use(limiter);
 app.use(express.json());
 app.use(requestLogger);
 app.post('/signup', createUserValidator, createUser);
@@ -44,6 +48,7 @@ app.post('/signin', loginValidator, login);
 app.use(authenticateToken);
 app.use('/users', usersRouter);
 app.use('/books', booksRouter);
+app.use(handleRouteNotFound);
 app.use(errorLogger);
 app.use(errors());
 app.use(handleError);
