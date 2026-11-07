@@ -2,10 +2,15 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
+import { errors } from 'celebrate';
 import usersRouter from './routes/users.js';
 import booksRouter from './routes/books.js';
 import { createUser, login } from './controllers/users.js';
 import limiter from './middlewares/limiter.js';
+import {
+  createUserValidator,
+  loginValidator,
+} from './middlewares/userValidator.js';
 import authenticateToken from './middlewares/auth.js';
 import handleError from './middlewares/error.js';
 import { requestLogger, errorLogger } from './middlewares/logger.js';
@@ -34,12 +39,13 @@ app.use(limiter);
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(requestLogger);
-app.post('/signup', createUser);
-app.post('/signin', login);
+app.post('/signup', createUserValidator, createUser);
+app.post('/signin', loginValidator, login);
 app.use(authenticateToken);
 app.use('/users', usersRouter);
 app.use('/books', booksRouter);
 app.use(errorLogger);
+app.use(errors());
 app.use(handleError);
 
 if (process.env.NODE_ENV !== 'test') {

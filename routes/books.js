@@ -1,5 +1,9 @@
 import express from 'express';
 import {
+  createBookValidator,
+  updateIsReadBookValidator,
+} from '../middlewares/bookValidator.js';
+import {
   getBooks,
   createBook,
   updateIsReadBook,
@@ -9,8 +13,8 @@ import {
 const booksRouter = express.Router();
 
 booksRouter.get('/', getBooks);
-booksRouter.post('/', createBook);
-booksRouter.patch('/:bookId', updateIsReadBook);
+booksRouter.post('/', createBookValidator, createBook);
+booksRouter.patch('/:bookId', updateIsReadBookValidator, updateIsReadBook);
 booksRouter.delete('/:bookId', deleteBook);
 
 export default booksRouter;
