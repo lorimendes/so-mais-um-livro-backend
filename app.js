@@ -1,0 +1,60 @@
+import express from 'express';
+import mongoose from 'mongoose';
+import helmet from 'helmet';
+import cors from 'cors';
+import { errors } from 'celebrate';
+import usersRouter from './routes/users.js';
+import booksRouter from './routes/books.js';
+import { createUser, login } from './controllers/users.js';
+import limiter from './middlewares/limiter.js';
+import {
+  createUserValidator,
+  loginValidator,
+} from './middlewares/userValidator.js';
+import authenticateToken from './middlewares/auth.js';
+import handleError from './middlewares/error.js';
+import { requestLogger, errorLogger } from './middlewares/logger.js';
+
+const corsOptions = {
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+
+process.loadEnvFile();
+const { PORT = 3000 } = process.env;
+const app = express();
+
+const mongodbUrl =
+  process.env.NODE_ENV === 'test'
+    ? 'mongodb://localhost:27017/somaisumlivro'
+    : process.env.MONGODB_URL;
+
+mongoose.connect(mongodbUrl).catch((err) => {
+  console.error(`Erro ao conectar com o banco de dados: ${err}`);
+});
+
+const handleRouteNotFound = (req, res) => {
+  res.status(404).send({ message: 'A solicitação não foi encontrada' });
+};
+
+app.use(helmet());
+app.use(cors(corsOptions));
+app.use(limiter);
+app.use(express.json());
+app.use(requestLogger);
+app.post('/signup', createUserValidator, createUser);
+app.post('/signin', loginValidator, login);
+app.use(authenticateToken);
+app.use('/users', usersRouter);
+app.use('/books', booksRouter);
+app.use(handleRouteNotFound);
+app.use(errorLogger);
+app.use(errors());
+app.use(handleError);
+
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {});
+}
+
+export default app;
